@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino — Catálogo IoT</title>
+  <meta name="description" content="Arduino: conceito, funcionamento, características técnicas e exemplos de programação lendo sensores IoT.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">IoT<span>/</span>Catálogo Industrial</div>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="sensores.html">Sensores</a>
+        <a href="arduino.html" class="active">Arduino</a>
+        <a href="robos.html">Robôs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="docblock">
+        <p class="doc-eyebrow">Plataforma de prototipagem</p>
+        <h1 class="doc-title">Arduino: lendo o mundo físico.</h1>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap split">
+        <div>
+          <p class="sec-label">Conceito</p>
+          <h2>O que é</h2>
+          <p class="lead">O Arduino é uma plataforma aberta de prototipagem eletrônica formada por
+          uma placa com microcontrolador e um ambiente de programação (IDE) simples.</p>
+          <p>É a ponte entre os sensores e o software: a placa lê os pinos de entrada (onde ficam
+          os sensores), processa o programa e comanda as saídas (LEDs, motores, relés). Por ser
+          barato e fácil de programar, é a porta de entrada mais comum para projetos de IoT.</p>
+          <p><b>Funcionamento:</b> todo programa (sketch) tem duas partes — <code>setup()</code>,
+          que roda uma vez para configurar os pinos, e <code>loop()</code>, que se repete
+          continuamente lendo sensores e reagindo.</p>
+        </div>
+        <div>
+          <figure class="card" style="border:1px solid var(--line)">
+            <img src="img/arduino.jpg" alt="Placa Arduino Uno">
+          </figure>
+          <table class="spectable" aria-label="Características do Arduino Uno">
+            <caption class="code-cap" style="text-align:left;caption-side:top;margin:10px 0">Arduino Uno — características</caption>
+            <tr><th>Microcontrolador</th><td>ATmega328P</td></tr>
+            <tr><th>Tensão de operação</th><td>5 V</td></tr>
+            <tr><th>Pinos digitais</th><td>14 (6 com PWM)</td></tr>
+            <tr><th>Entradas analógicas</th><td>6 (conversor A/D 10 bits)</td></tr>
+            <tr><th>Memória Flash</th><td>32 KB</td></tr>
+            <tr><th>Clock</th><td>16 MHz</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="sec-label">Programação</p>
+        <h2>Exemplos lendo sensores</h2>
+        <p>Cada exemplo abaixo é um trecho mínimo que lê um sensor do <a href="sensores.html">catálogo</a>
+        e mostra o valor no Monitor Serial. São 10 sensores diferentes.</p>
+
+        <div class="split" style="grid-template-columns:1fr 1fr;gap:32px">
+
+          <div>
+            <h3>1 · LDR (luz)</h3>
+            <p class="code-cap">Analógico — leitura direta em A0.</p>
+            <pre><code>int pino = A0;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int luz = analogRead(pino);   <span class="cmt">// 0 a 1023</span>
+  Serial.println(luz);
+  delay(500);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>2 · DHT22 (temp/umidade)</h3>
+            <p class="code-cap">Biblioteca DHT (Adafruit).</p>
+            <pre><code>#include &lt;DHT.h&gt;
+DHT dht(2, DHT22);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  float t = dht.readTemperature();
+  float u = dht.readHumidity();
+  Serial.print(t); Serial.print(" C  ");
+  Serial.println(u);
+  delay(2000);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>3 · DS18B20 (temperatura)</h3>
+            <p class="code-cap">Barramento 1-Wire.</p>
+            <pre><code>#include &lt;OneWire.h&gt;
+#include &lt;DallasTemperature.h&gt;
+OneWire fio(4);
+DallasTemperature s(&amp;fio);
+
+void setup() {
+  Serial.begin(9600);
+  s.begin();
+}
+
+void loop() {
+  s.requestTemperatures();
+  Serial.println(s.getTempCByIndex(0));
+  delay(1000);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>4 · HC-SR04 (distância)</h3>
+            <p class="code-cap">Mede o tempo do eco.</p>
+            <pre><code>int trig = 9, echo = 10;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
+}
+
+void loop() {
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+  long t = pulseIn(echo, HIGH);
+  Serial.println(t / 58);   <span class="cmt">// cm</span>
+  delay(300);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>5 · PIR (presença)</h3>
+            <p class="code-cap">Saída digital: 1 = movimento.</p>
+            <pre><code>int pir = 7;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(pir, INPUT);
+}
+
+void loop() {
+  if (digitalRead(pir) == HIGH) {
+    Serial.println("Movimento!");
+  }
+  delay(200);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>6 · MQ-2 (gás)</h3>
+            <p class="code-cap">Analógico + alarme por limiar.</p>
+            <pre><code>int pino = A1;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int gas = analogRead(pino);
+  Serial.println(gas);
+  if (gas &gt; 400) {
+    Serial.println("Vazamento!");
+  }
+  delay(500);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>7 · BMP280 (pressão)</h3>
+            <p class="code-cap">Comunicação I2C.</p>
+            <pre><code>#include &lt;Adafruit_BMP280.h&gt;
+Adafruit_BMP280 bmp;
+
+void setup() {
+  Serial.begin(9600);
+  bmp.begin(0x76);
+}
+
+void loop() {
+  Serial.print(bmp.readPressure() / 100);
+  Serial.println(" hPa");
+  delay(1000);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>8 · ACS712 (corrente)</h3>
+            <p class="code-cap">Converte a tensão do sensor em ampères.</p>
+            <pre><code>int pino = A2;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int leitura = analogRead(pino);
+  float volts = leitura * 5.0 / 1023.0;
+  float amp = (volts - 2.5) / 0.185;  <span class="cmt">// 5A</span>
+  Serial.println(amp);
+  delay(500);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>9 · MPU-6050 (inercial)</h3>
+            <p class="code-cap">Lê o acelerômetro por I2C.</p>
+            <pre><code>#include &lt;Wire.h&gt;
+#include &lt;MPU6050.h&gt;
+MPU6050 mpu;
+
+void setup() {
+  Serial.begin(9600);
+  Wire.begin();
+  mpu.initialize();
+}
+
+void loop() {
+  int16_t ax, ay, az;
+  mpu.getAcceleration(&amp;ax, &amp;ay, &amp;az);
+  Serial.println(ax);
+  delay(300);
+}</code></pre>
+          </div>
+
+          <div>
+            <h3>10 · Umidade do solo</h3>
+            <p class="code-cap">Analógico: converte para porcentagem.</p>
+            <pre><code>int pino = A3;
+
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int leitura = analogRead(pino);
+  int pct = map(leitura, 1023, 300, 0, 100);
+  Serial.print(pct);
+  Serial.println(" %");
+  delay(1000);
+}</code></pre>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Juan Saragoza de Amorim — 3º B · Técnico em Desenvolvimento de Sistemas</span>
+      <span>SESI SENAI Tijucas · Internet das Coisas</span>
+    </div>
+  </footer>
+</body>
+</html>

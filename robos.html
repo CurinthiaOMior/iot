@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robôs Industriais — Catálogo IoT</title>
+  <meta name="description" content="Catálogo de robôs industriais: cartesiano, SCARA, articulado, cilíndrico, delta, polar e colaborativo. Funcionamento, aplicações, integração IoT e fabricantes.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">IoT<span>/</span>Catálogo Industrial</div>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="sensores.html">Sensores</a>
+        <a href="arduino.html">Arduino</a>
+        <a href="robos.html" class="active">Robôs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="docblock">
+        <p class="doc-eyebrow">Frente 02 · Atuação e movimento</p>
+        <h1 class="doc-title">Robôs industriais.</h1>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap split">
+        <div>
+          <p class="sec-label">Conceito</p>
+          <h2>Robótica industrial</h2>
+          <p class="lead">Robô industrial é um manipulador programável, de múltiplos eixos, capaz
+          de mover ferramentas ou peças ao longo de trajetórias definidas, com força e precisão
+          repetíveis.</p>
+          <p>Ele substitui ou apoia o operador em tarefas repetitivas, perigosas ou de alta
+          precisão. Cada família de robô — pela forma como suas juntas se combinam — tem uma
+          geometria de trabalho e uma velocidade que a tornam melhor para certos processos.</p>
+        </div>
+        <div>
+          <p class="sec-label">Relação</p>
+          <h2>Robôs e a IoT</h2>
+          <p>Na Indústria 4.0 o robô deixa de ser uma ilha. Seus controladores publicam dados —
+          posição, torque, temperatura, número de ciclos, falhas — em redes industriais como
+          <b>Profinet</b>, <b>EtherCAT</b>, <b>OPC UA</b> e <b>MQTT</b>.</p>
+          <p>Com isso é possível monitorar a produção em tempo real, prever a manutenção antes
+          da quebra e coordenar vários robôs, esteiras e sensores como um sistema único. O
+          sensor mede, a rede transporta, o robô executa.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="sec-label">Catálogo</p>
+        <h2>Modelos de robôs</h2>
+
+        <div class="toolbar" role="search">
+          <label for="busca">Buscar</label>
+          <input type="search" id="busca" placeholder="nome ou aplicação… ex: solda" autocomplete="off">
+          <div class="chips" role="group" aria-label="Filtrar por cinemática">
+            <button class="chip" data-cat="todos" aria-pressed="true">Todos</button>
+            <button class="chip" data-cat="linear" aria-pressed="false">Linear</button>
+            <button class="chip" data-cat="serial" aria-pressed="false">Braço serial</button>
+            <button class="chip" data-cat="paralelo" aria-pressed="false">Paralelo</button>
+            <button class="chip" data-cat="colaborativo" aria-pressed="false">Colaborativo</button>
+          </div>
+          <span class="count" id="contador"></span>
+        </div>
+
+        <div class="grid" data-catalogo>
+
+          <article class="card" data-nome="cartesiano gantry portico linear cnc impressao" data-cat="linear">
+            <figure><img src="img/robo-cartesiano.jpg" alt="Robô cartesiano de pórtico" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Cinemática linear</span>
+              <h3>Robô Cartesiano</h3>
+              <p class="desc">Três eixos lineares perpendiculares (X, Y, Z) que se movem em linha
+              reta. A ferramenta é posicionada por coordenadas cartesianas sobre uma área retangular.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Guias com fuso ou correia em cada eixo, movidas por motores</dd>
+                <dt>Características</dt><dd>Alta precisão e repetibilidade, estrutura rígida, fácil de programar</dd>
+                <dt>Aplicações</dt><dd>Impressão 3D, CNC, corte, pick-and-place, paletização</dd>
+                <dt>IoT</dt><dd>Encoders e fins de curso enviam posição/ciclos por Ethernet</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> Yamaha (XY-X) · Igus (drylin) · Janome (JR-V)</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="scara montagem pick and place parafuso eletronicos" data-cat="serial">
+            <figure><img src="img/robo-scara.jpg" alt="Robô SCARA" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Braço serial</span>
+              <h3>Robô SCARA</h3>
+              <p class="desc">Braço com duas juntas rotativas no plano horizontal e um eixo
+              vertical. É rígido em Z e flexível em XY — ideal para inserção vertical rápida.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Duas rotações posicionam no plano; o eixo Z desce a peça</dd>
+                <dt>Características</dt><dd>Muito rápido, preciso, carga leve/média, área cilíndrica</dd>
+                <dt>Aplicações</dt><dd>Montagem de eletrônicos, dosagem, parafusamento</dd>
+                <dt>IoT</dt><dd>Dados de ciclo e torque expostos por OPC UA / Ethernet</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> Epson (série G) · Yamaha (YK) · Stäubli (TS2)</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="articulado 6 eixos braco solda pintura manuseio" data-cat="serial">
+            <figure><img src="img/robo-articulado.jpg" alt="Robô articulado de 6 eixos" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Braço serial</span>
+              <h3>Robô Articulado</h3>
+              <p class="desc">Braço com várias juntas rotativas (em geral 6 eixos), parecido com um
+              braço humano. As juntas em série dão liberdade para alcançar qualquer orientação.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Juntas rotativas em série, comandadas por servomotores</dd>
+                <dt>Características</dt><dd>4–7 eixos, grande alcance, cargas de kg até &gt;1 t, versátil</dd>
+                <dt>Aplicações</dt><dd>Solda, pintura, manuseio, paletização, usinagem</dd>
+                <dt>IoT</dt><dd>Profinet/EtherCAT nativos; torque e visão para manutenção preditiva</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> ABB (IRB) · KUKA (KR) · FANUC (série M)</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="cilindrico coordenadas cilindricas prensa manuseio" data-cat="serial">
+            <figure><img src="img/robo-cilindrico.jpg" alt="Robô cilíndrico" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Braço serial</span>
+              <h3>Robô Cilíndrico</h3>
+              <p class="desc">Opera em coordenadas cilíndricas: uma base que gira, um braço que
+              sobe e outro que avança, alcançando pontos dentro de um volume cilíndrico.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Uma junta rotativa na base + duas lineares (vertical e radial)</dd>
+                <dt>Características</dt><dd>Construção simples e robusta, bom alcance vertical, carga média</dd>
+                <dt>Aplicações</dt><dd>Alimentação de prensas, montagem, solda a ponto</dd>
+                <dt>IoT</dt><dd>Sensores de posição por eixo e CLPs reportam status pela rede</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> exemplos históricos — Seiko · Fanuc · ST Robotics</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="delta paralelo alta velocidade embalagem alimentos esteira" data-cat="paralelo">
+            <figure><img src="img/robo-delta.png" alt="Robô delta de cinemática paralela" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Cinemática paralela</span>
+              <h3>Robô Delta</h3>
+              <p class="desc">Robô de cinemática paralela com três braços presos a uma base fixa no
+              topo. Os motores ficam na base, deixando a parte móvel muito leve — daí a altíssima velocidade.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Três braços movem em conjunto uma plataforma central</dd>
+                <dt>Características</dt><dd>Extremamente rápido, cargas leves, preciso, área em cúpula</dd>
+                <dt>Aplicações</dt><dd>Pick-and-place veloz, embalagem de alimentos, seleção em esteira</dd>
+                <dt>IoT</dt><dd>Trabalha com visão e esteiras sincronizadas por Ethernet</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> ABB (FlexPicker IRB 360) · FANUC (M-1iA) · Omron (Quattro)</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="polar esferico unimate solda fundicao historico" data-cat="serial">
+            <figure><img src="img/robo-polar.jpg" alt="Robô polar / esférico" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Braço serial</span>
+              <h3>Robô Polar (Esférico)</h3>
+              <p class="desc">Trabalha em coordenadas polares: base giratória, junta de elevação e um
+              braço que avança, cobrindo um volume esférico. Foi a configuração do Unimate, o primeiro robô industrial.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Duas juntas rotativas + uma linear geram um alcance esférico</dd>
+                <dt>Características</dt><dd>Bom alcance horizontal; hoje raro, substituído pelos articulados</dd>
+                <dt>Aplicações</dt><dd>Solda a ponto, fundição, manuseio (histórico automotivo)</dd>
+                <dt>IoT</dt><dd>Em linhas modernizadas, recebem sensores e CLPs para integração</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> Unimation (Unimate) · Kawasaki · Fanuc</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="colaborativo cobot ur seguranca montagem assistida pme" data-cat="colaborativo">
+            <figure><img src="img/robo-cobot.png" alt="Robô colaborativo (cobot)" loading="lazy"></figure>
+            <div class="body">
+              <span class="cat">Colaborativo</span>
+              <h3>Robô Colaborativo (Cobot)</h3>
+              <p class="desc">Projetado para trabalhar ao lado de pessoas, sem gaiola. Sensores de
+              força em cada junta detectam contato e param o braço; velocidade e força são limitadas por norma.</p>
+              <dl>
+                <dt>Funcionamento</dt><dd>Juntas com sensor de força/torque e software de segurança</dd>
+                <dt>Características</dt><dd>Fácil de programar (guiagem manual), leve, cargas de poucos kg</dd>
+                <dt>Aplicações</dt><dd>Montagem assistida, inspeção, embalagem, PMEs</dd>
+                <dt>IoT</dt><dd>Conectado nativamente: MQTT/OPC UA, dashboards e integração com MES/ERP</dd>
+              </dl>
+              <p class="makers"><b>Fabricantes:</b> Universal Robots (UR) · FANUC (CRX) · KUKA (LBR iiwa)</p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="empty" id="vazio">
+          Nenhum robô corresponde ao filtro. Limpe a busca ou escolha outra cinemática.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Juan Saragoza de Amorim — 3º B · Técnico em Desenvolvimento de Sistemas</span>
+      <span>SESI SENAI Tijucas · Internet das Coisas</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

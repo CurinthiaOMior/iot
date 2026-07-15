@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo IoT — Sensores e Robôs Industriais</title>
+  <meta name="description" content="Catálogo técnico de sensores e robôs industriais aplicados à Internet das Coisas (IoT) e à Indústria 4.0.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">IoT<span>/</span>Catálogo Industrial</div>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="index.html" class="active">Início</a>
+        <a href="sensores.html">Sensores</a>
+        <a href="arduino.html">Arduino</a>
+        <a href="robos.html">Robôs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="docblock">
+        <p class="doc-eyebrow">Documento técnico · Indústria 4.0</p>
+        <h1 class="doc-title">Sensores e robôs da Internet das Coisas.</h1>
+        <dl class="doc-meta">
+          <div><dt>Autor</dt><dd>Juan S. de Amorim</dd></div>
+          <div><dt>Turma</dt><dd>3º B — Des. Sistemas</dd></div>
+          <div><dt>Unidade</dt><dd>Internet das Coisas</dd></div>
+          <div><dt>Escola</dt><dd>SESI SENAI Tijucas</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap split">
+        <div>
+          <p class="sec-label">01 — O que é</p>
+          <h2>Internet das Coisas (IoT)</h2>
+          <p class="lead">A Internet das Coisas é a rede de objetos físicos — máquinas, sensores e
+          dispositivos — capazes de coletar dados do ambiente, trocar informações entre si e
+          agir sobre processos, sem depender o tempo todo de um operador humano.</p>
+          <p>No chão de fábrica, isso significa equipamentos que medem temperatura, pressão,
+          posição ou consumo de energia e enviam esses valores por rede para sistemas de
+          controle. A partir desses dados é possível monitorar, prever falhas e automatizar
+          decisões em tempo real. Sensores fazem a leitura; robôs e atuadores executam a ação.</p>
+        </div>
+        <figure class="card" style="border:1px solid var(--line)">
+          <img src="img/capa-industria.jpg" alt="Robôs industriais em uma linha de montagem automatizada">
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="sec-label">02 — Por que importa</p>
+        <h2>A importância da automação industrial</h2>
+        <div class="concepts">
+          <div class="concept"><span class="num">A</span>
+            <div><h3>Produtividade e repetibilidade</h3>
+            <p>Máquinas automatizadas operam de forma contínua e com precisão constante,
+            reduzindo variações que a operação manual introduz.</p></div>
+          </div>
+          <div class="concept"><span class="num">B</span>
+            <div><h3>Segurança</h3>
+            <p>Robôs assumem tarefas perigosas — solda, cargas pesadas, ambientes tóxicos —
+            afastando o trabalhador do risco.</p></div>
+          </div>
+          <div class="concept"><span class="num">C</span>
+            <div><h3>Dados para decisão</h3>
+            <p>O sensoriamento gera um fluxo de dados que alimenta manutenção preditiva,
+            controle de qualidade e otimização de processos.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <p class="sec-label">03 — A ligação</p>
+        <h2>Robótica, sensoriamento e IoT</h2>
+        <p>Sensores e robôs não trabalham isolados. O sensor lê uma grandeza física e a
+        converte em sinal elétrico; a rede transporta esse sinal; o controlador decide; o robô
+        atua. Quando esse ciclo é conectado à Internet das Coisas — usando protocolos como
+        <b>MQTT</b>, <b>OPC UA</b>, <b>Profinet</b> ou <b>Ethernet Industrial</b> — a fábrica
+        inteira passa a ser observável e ajustável remotamente. Este catálogo separa esse
+        universo em duas frentes:</p>
+
+        <div class="areas">
+          <a class="area" href="sensores.html">
+            <span class="k">Frente 01</span>
+            <h3>Sensores IoT</h3>
+            <p class="muted">Temperatura, distância, gás, corrente, presença e mais. Conceito,
+            princípio de funcionamento, tipo de sinal e integração com Arduino / ESP32.</p>
+            <span class="go">Abrir catálogo de sensores →</span>
+          </a>
+          <a class="area" href="robos.html">
+            <span class="k">Frente 02</span>
+            <h3>Robôs Industriais</h3>
+            <p class="muted">Cartesiano, SCARA, articulado, cilíndrico, delta, polar e
+            colaborativo. Funcionamento, aplicações, integração IoT e fabricantes.</p>
+            <span class="go">Abrir catálogo de robôs →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Juan Saragoza de Amorim — 3º B · Técnico em Desenvolvimento de Sistemas</span>
+      <span>SESI SENAI Tijucas · Internet das Coisas · Docente José Ricardo Maçaneiro</span>
+    </div>
+  </footer>
+</body>
+</html>
