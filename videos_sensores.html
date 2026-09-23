@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensores IoT — Catálogo Industrial</title>
+  <meta name="description" content="Catálogo de sensores IoT e industriais: conceito, princípio de funcionamento, especificações, tipo de sinal, aplicações e fabricantes.">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Padroniza o tamanho de todos os vídeos dos cards */
+    .card figure {
+      margin: 0;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #000;
+    }
+    .card figure video {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">IoT<span>/</span>Catálogo Industrial</div>
+      <nav class="nav" aria-label="Navegação principal">
+        <a href="index.html">Início</a>
+        <a href="sensores.html" class="active">Sensores</a>
+        <a href="arduino.html">Arduino</a>
+        <a href="robos.html">Robôs</a>
+        <a href="videos_sensores.html">Videos censores</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <div class="docblock">
+        <h1 class="doc-title">Videos censores arduino.</h1>
+      </div>
+    </div>
+
+    <section>
+        <div class="grid" data-catalogo>
+
+          <article class="card" data-nome="DHT22 AM2302 temperatura umidade" data-cat="ambiente">
+            <figure><video src="video/temperatura.mp4" controls preload="metadata" playsinline aria-label="Sensor de temperatura DS18B20 (sonda à prova d'água)"></video></figure>
+            <div class="body">
+              <span class="cat">Temperatura · Umidade</span>
+              <h3>DHT22 (AM2302)</h3>
+              <p class="desc">Mede temperatura e umidade relativa do ar num só módulo. Usa um
+              termistor e um sensor capacitivo, com um chip interno que já entrega o valor pronto por 1 fio.</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="DS18B20 temperatura sonda" data-cat="ambiente">
+            <figure><video src="video/buzer.mp4" controls preload="metadata" playsinline aria-label="Sensor de temperatura DS18B20 (sonda à prova d'água)"></video></figure>
+            <div class="body">
+              <span class="cat">Buzer</span>
+              <p class="desc">Buzer</p>
+            </div>
+          </article>
+
+          <article class="card" data-nome="HC-SR04 ultrassonico distancia" data-cat="distancia">
+            <figure><video src="video/ultrassonico.mp4" controls preload="metadata" playsinline aria-label="Sensor ultrassônico HC-SR04"></video></figure>
+            <div class="body">
+              <span class="cat">Distância · Ultrassônico</span>
+              <h3>HC-SR04</h3>
+              <p class="desc">Mede distância por ultrassom: emite um pulso de 40 kHz e cronometra
+              o eco. A distância é o tempo do eco multiplicado pela velocidade do som, dividido por dois.</p>
+              <dl>
+                <dt>Specs</dt><dd>2–400 cm · ±3 mm · 5 V</dd>
+                <dt>Sinal</dt><dd><span class="tag">Digital</span> (Trigger/Echo)</dd>
+                <dt>Aplicações</dt><dd>Nível de tanques, robôs anti-colisão</dd>
+                <dt>Projeto</dt><dd>Medidor de nível que alerta quando o silo enche</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="card" data-nome="YF-S201 vazao fluxo agua turbina hall" data-cat="fluxo">
+            <figure><video src="video/botaoligadesligaled.mp4" controls preload="metadata" playsinline aria-label="Mecanismo simples com botão liga/desliga LED"></video></figure>
+            <div class="body">
+              <span class="cat">Mecanismo simples com botão</span>
+              <h3>Botão</h3>
+              <p class="desc">clica o botão e o led liga ou desliga</p>
+            </div>
+          </article>
+          <article class="card" data-nome="esp" data-cat="fluxo">
+            <figure><video src="video/esp_comprimido.mp4" controls preload="metadata" playsinline aria-label="Mecanismo simples com botão liga/desliga LED"></video></figure>
+            <div class="body">
+              <span class="cat">ESP</span>
+              <h3>ESP</h3>
+              <p class="desc">clica o botão e conta os numero de forma crescente ou decrescente</p>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="empty" id="vazio">
+          Nenhum sensor corresponde ao filtro. Limpe a busca ou escolha outra categoria.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Juan Saragoza de Amorim — 3º B · Técnico em Desenvolvimento de Sistemas</span>
+      <span>SESI SENAI Tijucas · Internet das Coisas</span>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
