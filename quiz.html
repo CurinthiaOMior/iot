@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz SAEP — Catálogo IoT</title>
+<meta name="description" content="Simulado modelo SAEP sobre robôs industriais, sensores, multímetro, Arduino, ESP32 e programação.">
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* Estilos exclusivos do quiz — usam as variáveis e a tipografia do style.css */
+.quiz-q{border:1px solid var(--line,#c9ced3);padding:20px 22px;margin:0 0 20px}
+.quiz-q h3{margin:0 0 10px}
+.quiz-ctx{margin:0 0 10px}
+.quiz-trig{font-weight:600;margin:14px 0 10px}
+.quiz-alt{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line,#c9ced3);padding:10px 12px;margin:0 0 8px;cursor:pointer}
+.quiz-alt input{margin-top:4px}
+.quiz-alt:has(input:checked){border-width:2px}
+.quiz-alt.ok{border-color:#2e9d5b;background:rgba(46,157,91,.14)}
+.quiz-alt.err{border-color:#d1493f;background:rgba(209,73,63,.14)}
+.quiz-exp{display:none;margin:12px 0 0;padding-left:12px;border-left:3px solid var(--line,#c9ced3)}
+.quiz-q.done .quiz-exp{display:block}
+.quiz-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:8px 0 24px}
+.quiz-score{font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+<a class="brand" href="index.html">IoT<span>/Catálogo Industrial</span></a>
+<nav>
+<a href="index.html">Início</a>
+<a href="sensores.html">Sensores</a>
+<a href="arduino.html">Arduino</a>
+<a href="robos.html">Robôs</a>
+<a href="videos_sensores.html">Videos censores</a>
+<a href="tinkercad.html">Tinkercad</a>
+<a href="quiz.html" >Quiz SAEP</a>
+</nav>
+</header>
+
+<main>
+<div class="wrap">
+<div class="docblock">
+<p class="doc-eyebrow">Avaliação · Modelo SAEP</p>
+<h1 class="doc-title">Quiz: sensores, Arduino e robôs.</h1>
+</div>
+</div>
+
+<section>
+<div class="wrap">
+<p class="lead">Dez questões no formato SAEP: cada uma traz um <b>contexto</b>, um <b>gatilho</b> (a pergunta) e quatro alternativas. Marque uma alternativa por questão e clique em <b>Corrigir</b>.</p>
+<div class="quiz-bar">
+<button class="chip" id="btnCorrigir" type="button">Corrigir</button>
+<button class="chip" id="btnRefazer" type="button">Refazer</button>
+<span class="quiz-score" id="placar" aria-live="polite"></span>
+</div>
+<div id="quiz"></div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="wrap">
+<span>Juan Saragoza de Amorim — 3º B · Técnico em Desenvolvimento de Sistemas</span>
+<span>SESI SENAI Tijucas · Internet das Coisas</span>
+</div>
+</footer>
+
+<script>
+(function () {
+  var Q = [
+    { tema: "Robôs industriais",
+      ctx: "Em uma linha de embalagem de alimentos, peças leves passam em alta velocidade por uma esteira e precisam ser separadas e posicionadas em bandejas, com apoio de câmera de visão sincronizada com a esteira.",
+      gat: "Qual robô é o mais indicado para essa tarefa de pick-and-place veloz?",
+      alt: ["Robô cartesiano, pois move três eixos lineares em uma área retangular.",
+            "Robô cilíndrico, pois alcança um volume cilíndrico com carga média.",
+            "Robô delta, pois a cinemática paralela mantém os motores na base e deixa a parte móvel leve.",
+            "Robô polar, pois é a configuração mais usada hoje em linhas de embalagem."],
+      certa: 2,
+      exp: "O delta tem três braços presos a uma base fixa; como os motores ficam na base, a plataforma é muito leve e atinge altíssima velocidade com cargas leves. O polar é raro hoje, e o cartesiano e o cilíndrico não têm essa velocidade." },
+
+    { tema: "Sensores",
+      ctx: "Um silo será monitorado sem contato com o material. Um sensor HC-SR04 emite um pulso de 40 kHz e o Arduino mede o tempo do eco: pulseIn() retornou 5800 µs.",
+      gat: "Sabendo que a distância em cm é o tempo em µs dividido por 58, qual é a distância aproximada até a superfície?",
+      alt: ["50 cm", "100 cm", "200 cm", "290 cm"],
+      certa: 1,
+      exp: "5800 / 58 = 100 cm. O fator 58 já considera a velocidade do som e a divisão por dois (o pulso vai até o objeto e volta). Quem esquece de dividir por dois chega a ~200 cm." },
+
+    { tema: "Sensores",
+      ctx: "Um poste deve acender a lâmpada ao anoitecer. Para isso, um LDR (fotoresistor) é ligado em divisor de tensão à entrada A0 de um Arduino Uno.",
+      gat: "Qual alternativa descreve corretamente o tipo de sinal e o comportamento do LDR?",
+      alt: ["Sinal digital; a resistência aumenta quando recebe mais luz.",
+            "Sinal analógico; a resistência diminui quando o ambiente escurece.",
+            "Sinal I2C; a resistência não varia com a luz, apenas a tensão de alimentação.",
+            "Sinal analógico (divisor de tensão); a resistência aumenta quando o ambiente escurece."],
+      certa: 3,
+      exp: "A luz libera portadores de carga e reduz a resistência do LDR; no escuro a resistência sobe (~1 MΩ). Como a leitura varia continuamente, o sinal é analógico e lido com analogRead()." },
+
+    { tema: "Multímetro",
+      ctx: "Uma bancada tem um Arduino Uno energizado alimentando um sensor HC-SR04, que exige 5 V. O sensor não responde e o técnico suspeita que o pino 5V da placa não está entregando tensão.",
+      gat: "Como o técnico deve usar o multímetro para verificar isso?",
+      alt: ["Selecionar tensão contínua (VCC) e colocar as ponteiras em paralelo entre o pino 5V e o GND.",
+            "Selecionar resistência (Ω) e colocar as ponteiras entre o pino 5V e o GND com a placa energizada.",
+            "Selecionar corrente (A) e colocar as ponteiras em paralelo entre o pino 5V e o GND.",
+            "Selecionar tensão alternada (VAC) e colocar as ponteiras em série com o pino 5V."],
+      certa: 0,
+      exp: "Tensão se mede em paralelo e, para uma placa alimentada por USB/fonte CC, na escala de tensão contínua. Resistência só se mede com o circuito desenergizado, e corrente exige o multímetro em série." },
+
+    { tema: "Arduino — conceitos",
+      ctx: "Um aluno escreve um sketch para ler o LDR e mostrar o valor no Monitor Serial. É preciso iniciar a comunicação serial e definir o modo dos pinos uma única vez, e depois ler o sensor continuamente.",
+      gat: "Como o código deve ser organizado?",
+      alt: ["Serial.begin() e a leitura dentro de setup(), pois loop() só executa quando há erro.",
+            "Serial.begin() e pinMode() em setup(), que roda uma vez; a leitura em loop(), que se repete.",
+            "Serial.begin() e pinMode() em loop(); a leitura em setup().",
+            "Tudo fora das funções, pois o Arduino executa o arquivo de cima para baixo uma só vez."],
+      certa: 1,
+      exp: "setup() roda uma vez ao ligar a placa e serve para configurar pinos e Serial; loop() se repete continuamente lendo sensores e reagindo." },
+
+    { tema: "Arduino — portas e saídas",
+      ctx: "Com um Arduino Uno (14 pinos digitais, 6 com PWM, e 6 entradas analógicas de 10 bits) será montado um sistema que lê um LDR e ajusta o brilho de um LED conforme a luz ambiente.",
+      gat: "Qual ligação e qual comando estão corretos?",
+      alt: ["LDR no pino digital 2 com analogRead(); LED no pino 7 com analogWrite().",
+            "LDR em A0 com analogRead(); LED em A1 com analogWrite().",
+            "LDR no pino 13 com digitalRead(); LED em A0 com digitalWrite().",
+            "LDR em A0 com analogRead(); LED no pino 9 (PWM) com analogWrite()."],
+      certa: 3,
+      exp: "analogRead() usa as entradas A0–A5 (valores de 0 a 1023). Para variar o brilho é preciso uma saída PWM (no Uno: 3, 5, 6, 9, 10 e 11). Os pinos analógicos servem só como entrada e o pino 7 não tem PWM." },
+
+    { tema: "ESP",
+      ctx: "Uma estação meteorológica com sensor DHT22 precisa publicar temperatura e umidade por Wi-Fi usando MQTT. Um segundo sensor, o HC-SR04, opera em 5 V e será ligado à mesma placa.",
+      gat: "Qual placa e qual cuidado são adequados?",
+      alt: ["ESP32, que tem Wi-Fi integrado, mas opera em 3,3 V; o sinal Echo de 5 V precisa de adaptação de nível.",
+            "Arduino Uno, pois o ATmega328P tem Wi-Fi integrado e opera em 5 V.",
+            "ESP32, cujos pinos toleram 5 V; o Echo pode ser ligado direto.",
+            "Arduino Uno, pois o MQTT dispensa qualquer módulo de rede."],
+      certa: 0,
+      exp: "O ESP32 tem Wi-Fi e Bluetooth integrados, mas seus GPIOs trabalham em 3,3 V e não são feitos para 5 V. Já o Uno não tem rede sem um módulo adicional." },
+
+    { tema: "Código",
+      ctx: "Um aluno monta o medidor de distância abaixo, mas o Monitor Serial mostra sempre 0.",
+      cod: "int trig = 9, echo = 10;\n\nvoid setup() {\n  Serial.begin(9600);\n  pinMode(echo, INPUT);\n}\n\nvoid loop() {\n  digitalWrite(trig, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(trig, LOW);\n  long t = pulseIn(echo, HIGH);\n  Serial.println(t / 58);\n  delay(300);\n}",
+      gat: "Qual é a causa do problema?",
+      alt: ["Serial.begin() deveria estar dentro de loop().",
+            "O delay(300) impede o envio do pulso.",
+            "Falta configurar o pino trig como saída com pinMode(trig, OUTPUT).",
+            "A divisão t / 58 só funciona se t for do tipo float."],
+      certa: 2,
+      exp: "Sem pinMode(trig, OUTPUT) o pino continua como entrada, o pulso de 10 µs nunca chega ao sensor, pulseIn() estoura o tempo e retorna 0." },
+
+    { tema: "Código",
+      ctx: "Um alarme de vazamento usa o sensor MQ-2 em A1. O Monitor Serial recebe, em sequência, as leituras 320, 410, 400 e 650.",
+      cod: "int pino = A1;\n\nvoid setup() {\n  Serial.begin(9600);\n}\n\nvoid loop() {\n  int gas = analogRead(pino);\n  Serial.println(gas);\n  if (gas > 400) {\n    Serial.println(\"Vazamento!\");\n  }\n  delay(500);\n}",
+      gat: "Quantas vezes a mensagem \"Vazamento!\" será exibida?",
+      alt: ["1 vez", "2 vezes", "3 vezes", "4 vezes"],
+      certa: 1,
+      exp: "A condição é gas > 400 (estritamente maior). Só 410 e 650 satisfazem; 320 e 400 não." },
+
+    { tema: "Código",
+      ctx: "Um sensor capacitivo de umidade do solo é lido em A3 e convertido em porcentagem com map(). O sensor entrega 1023 no solo seco e 300 no solo encharcado. A leitura atual é 660.",
+      cod: "int pino = A3;\n\nvoid loop() {\n  int leitura = analogRead(pino);\n  int pct = map(leitura, 1023, 300, 0, 100);\n  Serial.print(pct);\n  Serial.println(\" %\");\n}",
+      gat: "Qual valor será impresso quando leitura = 660?",
+      alt: ["35 %", "64 %", "66 %", "50 %"],
+      certa: 3,
+      exp: "map() faz (660 − 1023) × (100 − 0) / (300 − 1023) = −36300 / −723 ≈ 50,2 e, como é int, trunca para 50 %. A faixa invertida (1023 → 0 %, 300 → 100 %) é o que faz o resultado ficar no meio." }
+  ];
+
+  var L = ["A", "B", "C", "D"];
+  var raiz = document.getElementById("quiz");
+  var placar = document.getElementById("placar");
+
+  function esc(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function montar() {
+    var h = "";
+    Q.forEach(function (q, i) {
+      h += '<article class="quiz-q" id="q' + i + '">';
+      h += '<span class="cat">Questão ' + (i + 1) + " · " + q.tema + "</span>";
+      h += '<p class="quiz-ctx"><b>Contexto:</b> ' + esc(q.ctx) + "</p>";
+      if (q.cod) h += "<pre><code>" + esc(q.cod) + "</code></pre>";
+      h += '<p class="quiz-trig">' + esc(q.gat) + "</p>";
+      q.alt.forEach(function (a, j) {
+        h += '<label class="quiz-alt"><input type="radio" name="q' + i + '" value="' + j + '"><span><b>' + L[j] + ")</b> " + esc(a) + "</span></label>";
+      });
+      h += '<p class="quiz-exp"><b>Comentário:</b> ' + esc(q.exp) + "</p>";
+      h += "</article>";
+    });
+    raiz.innerHTML = h;
+    placar.textContent = "";
+  }
+
+  function corrigir() {
+    var acertos = 0, vazias = 0;
+    Q.forEach(function (q, i) {
+      var box = document.getElementById("q" + i);
+      var marcada = box.querySelector("input:checked");
+      var labels = box.querySelectorAll(".quiz-alt");
+      labels[q.certa].classList.add("ok");
+      if (!marcada) { vazias++; }
+      else if (+marcada.value === q.certa) { acertos++; }
+      else { labels[+marcada.value].classList.add("err"); }
+      box.classList.add("done");
+      box.querySelectorAll("input").forEach(function (r) { r.disabled = true; });
+    });
+    placar.textContent = "Resultado: " + acertos + " de " + Q.length + " (" + Math.round(acertos / Q.length * 100) + " %)" +
+      (vazias ? " · " + vazias + " sem resposta" : "");
+    placar.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  document.getElementById("btnCorrigir").addEventListener("click", corrigir);
+  document.getElementById("btnRefazer").addEventListener("click", montar);
+  montar();
+})();
+</script>
+</body>
+</html>
