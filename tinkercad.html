@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Missões Tinkercad — Catálogo IoT</title>
+  <meta name="description" content="Três missões Arduino simuladas no Tinkercad: iluminação com PIR e LDR, distância com ultrassônico e ambiente com DHT11.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html">IoT<span>/Catálogo Industrial</span></a>
+  <nav>
+    <a href="index.html">Início</a>
+    <a href="sensores.html">Sensores</a>
+    <a href="arduino.html">Arduino</a>
+    <a href="robos.html">Robôs</a>
+    <a href="videos_sensores.html">Videos censores</a>
+    <a href="tinkercad.html" aria-current="page">Tinkercad</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow">Simulação · Arduino</p>
+    <h1>Missões Arduino no Tinkercad.</h1>
+    <p class="lead">Três circuitos montados e testados no simulador: cada missão combina sensores do <a href="sensores.html">catálogo</a> com o código que os lê, como nos <a href="arduino.html">exemplos de Arduino</a>.</p>
+    <ol class="mission-index">
+      <li><a href="#missao-1"><b>1</b> Iluminação</a></li>
+      <li><a href="#missao-2"><b>2</b> Distância</a></li>
+      <li><a href="#missao-3"><b>3</b> Ambiente</a></li>
+      <li><a href="#resumo"><b>✓</b> Resumo</a></li>
+    </ol>
+  </section>
+
+  <!-- MISSÃO 1 -->
+  <section class="mission" id="missao-1">
+    <div class="mission-head">
+      <span class="num">1</span>
+      <h2>Sistema de iluminação</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <p>Controle de iluminação automatizado com sensor PIR (movimento) e LDR (luminosidade): o LED só acende quando há alguém presente e o ambiente está escuro.</p>
+        <div class="flow" aria-label="Fluxo: movimento, luminosidade, decisão, LED">
+          <span>Movimento</span><i>→</i><span>Luminosidade</span><i>→</i><span>Decisão</span><i>→</i><span class="on">LED</span>
+        </div>
+        <dl class="specs">
+          <dt>Sensores</dt><dd>PIR (digital) · LDR (analógico)</dd>
+          <dt>Saída</dt><dd>LED no pino 13</dd>
+          <dt>Regra</dt><dd>Movimento detectado e leitura do LDR abaixo de 500</dd>
+        </dl>
+      </div>
+      <figure class="video">
+        <video src="video/exemplo1.mp4" controls loop muted preload="metadata"></video>
+        <figcaption>Simulação da missão 1</figcaption>
+      </figure>
+    </div>
+    <div class="code-block">
+      <div class="code-head"><span>main.ino</span><button type="button" class="copy" data-target="code1">Copiar</button></div>
+<pre><code id="code1">int pirPin = 2;
+int ldrPin = A0;
+int ledPin = 13;
+
+void setup() {
+  pinMode(pirPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  int movement = digitalRead(pirPin);
+  int light = analogRead(ldrPin);
+
+  if(movement == HIGH && light < 500) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- MISSÃO 2 -->
+  <section class="mission" id="missao-2">
+    <div class="mission-head">
+      <span class="num">2</span>
+      <h2>Sistema de distância</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <p>Medição de distância com sensor ultrassônico e calibração por potenciômetro, para ajustar a sensibilidade do alerta.</p>
+        <div class="scale" role="img" aria-label="Escala de 0 cm a 100 cm ou mais">
+          <div class="bar"><div class="fill"></div></div>
+          <div class="ticks"><span>0 cm</span><span>50 cm</span><span>100 cm+</span></div>
+        </div>
+        <dl class="specs">
+          <dt>Sensores</dt><dd>HC-SR04 (Trigger/Echo) · potenciômetro</dd>
+          <dt>Cálculo</dt><dd>tempo do eco × 0,034 ÷ 2, em centímetros</dd>
+          <dt>Limiar</dt><dd>ajustável de 10 a 200 cm pelo potenciômetro</dd>
+        </dl>
+      </div>
+      <figure class="video">
+        <video src="video/exemplo2.mp4" controls loop muted preload="metadata"></video>
+        <figcaption>Simulação da missão 2</figcaption>
+      </figure>
+    </div>
+    <div class="code-block">
+      <div class="code-head"><span>distance.ino</span><button type="button" class="copy" data-target="code2">Copiar</button></div>
+<pre><code id="code2">const int trigPin = 9;
+const int echoPin = 10;
+const int potPin = A1;
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH);
+  int distance = duration * 0.034 / 2;
+  int threshold = map(analogRead(potPin), 0, 1023, 10, 200);
+
+  Serial.println(distance);
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- MISSÃO 3 -->
+  <section class="mission" id="missao-3">
+    <div class="mission-head">
+      <span class="num">3</span>
+      <h2>Sistema ambiental</h2>
+    </div>
+    <div class="two-col">
+      <div>
+        <p>Monitoramento contínuo de temperatura e umidade, com atuadores para regular o microclima.</p>
+        <div class="readings">
+          <div><strong>24 °C</strong><span>Temperatura</span></div>
+          <div><strong>60 %</strong><span>Umidade</span></div>
+          <div class="ok"><strong>Ideal</strong><span>Condição</span></div>
+        </div>
+        <dl class="specs">
+          <dt>Sensor</dt><dd>DHT11 no pino 4 (digital, 1 fio)</dd>
+          <dt>Leitura</dt><dd>a cada 2 segundos, pelo Monitor Serial</dd>
+          <dt>Erro</dt><dd>se a leitura falhar, imprime “Erro sensor”</dd>
+        </dl>
+      </div>
+      <figure class="video">
+        <video src="video/exemplo3.mp4" controls loop muted preload="metadata"></video>
+        <figcaption>Simulação da missão 3</figcaption>
+      </figure>
+    </div>
+    <div class="code-block">
+      <div class="code-head"><span>environment.ino</span><button type="button" class="copy" data-target="code3">Copiar</button></div>
+<pre><code id="code3">#include &lt;DHT.h&gt;
+#define DHTPIN 4
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+}
+
+void loop() {
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Erro sensor");
+    return;
+  }
+
+  Serial.print("Umid: ");
+  Serial.print(h);
+  Serial.print("% Temp: ");
+  Serial.print(t);
+  Serial.println("C");
+  delay(2000);
+}</code></pre>
+    </div>
+  </section>
+
+  <!-- RESUMO -->
+  <section class="mission summary" id="resumo">
+    <div class="mission-head">
+      <span class="num">✓</span>
+      <h2>Resumo das missões</h2>
+    </div>
+    <ul class="checks">
+      <li><b>Missão 1</b> Sistema de iluminação reativo ativado</li>
+      <li><b>Missão 2</b> Radar de distância calibrado</li>
+      <li><b>Missão 3</b> Controle ambiental estável</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  Juan Saragoza de Amorim — 3º B · Técnico em Desenvolvimento de Sistemas SESI SENAI Tijucas · Internet das Coisas
+</footer>
+
+<script src="js/tinkercad.js"></script>
+</body>
+</html>
